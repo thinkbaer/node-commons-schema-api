@@ -182,11 +182,11 @@ export class ClassRef implements IClassRef {
   }
 
 
-  getPropertyDefs(): IPropertyRef[] {
+  getPropertyRefs(): IPropertyRef[] {
     return this.getLookupRegistry().filter(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef().getClass() === this.getClass());
   }
 
-  getPropertyDef(name: string): IPropertyRef {
+  getPropertyRef(name: string): IPropertyRef {
     return this.getLookupRegistry().find(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef().getClass() === this.getClass() && e.name === name);
   }
 
@@ -209,7 +209,7 @@ export class ClassRef implements IClassRef {
 
     if (!this.isEntity && follow) {
       meta.properties = [];
-      this.getPropertyDefs().forEach(prop => {
+      this.getPropertyRefs().forEach(prop => {
         meta.properties.push(prop.toJson());
       })
     }

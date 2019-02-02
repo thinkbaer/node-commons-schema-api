@@ -6,12 +6,12 @@ import {IBuildOptions} from "./IBuildOptions";
 
 export class SchemaUtils {
 
-  static transform(entityDef: IEntityRef | IClassRef, data: any, options: IBuildOptions = {}) {
-    let object = entityDef.create();
+  static transform(entityRef: IEntityRef | IClassRef, data: any, options: IBuildOptions = {}) {
+    let object = entityRef.create();
     if (options.beforeBuild) {
-      options.beforeBuild(entityDef, data, object)
+      options.beforeBuild(entityRef, data, object)
     }
-    for (let p of entityDef.getPropertyDefs()) {
+    for (let p of entityRef.getPropertyRefs()) {
       if ((_.isNull(data[p.name]) || _.isUndefined(data[p.name]))) {
         //object[p.name] = null;
         continue;
@@ -45,7 +45,7 @@ export class SchemaUtils {
       }
     }
     if (options.afterBuild) {
-      options.afterBuild(entityDef, data, object)
+      options.afterBuild(entityRef, data, object)
     }
     return object;
 

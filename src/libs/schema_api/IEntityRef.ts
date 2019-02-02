@@ -6,9 +6,9 @@ import {IEntityRefMetadata} from "./IEntityRefMetadata";
 
 export interface IEntityRef extends IBaseRef {
 
-  getPropertyDef(name: string): IPropertyRef;
+  getPropertyRef(name: string): IPropertyRef;
 
-  getPropertyDefs(): IPropertyRef[];
+  getPropertyRefs(): IPropertyRef[];
 
   getClassRef(): IClassRef;
 
