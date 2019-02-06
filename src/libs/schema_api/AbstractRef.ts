@@ -1,8 +1,9 @@
 import * as _ from 'lodash';
-import {XS_DEFAULT, XS_TYPE} from "./Constants";
+import {XS_DEFAULT, XS_TYPE, XS_TYPE_ENTITY, XS_TYPE_PROPERTY} from "./Constants";
 import {ClassRef} from "./ClassRef";
 import {LookupRegistry} from "./LookupRegistry";
 import {IBaseRef} from "./IBaseRef";
+import {AnnotationsHelper} from "./AnnotationsHelper";
 
 
 export abstract class AbstractRef implements IBaseRef {
@@ -27,6 +28,14 @@ export abstract class AbstractRef implements IBaseRef {
     } else {
       this.object = object ? ClassRef.get(object, this._lookupRegistry) : null;
     }
+    switch (type) {
+      case XS_TYPE_ENTITY:
+        AnnotationsHelper.merge(this.object, this._options);
+        break;
+      case XS_TYPE_PROPERTY:
+        AnnotationsHelper.merge(this.object, this._options, this.name);
+        break;
+    }
   }
 
 
@@ -41,8 +50,12 @@ export abstract class AbstractRef implements IBaseRef {
 
 
   setOptions(opts: any) {
-    if (opts && !_.isEmpty(Object.keys(opts))) {
-      this._options = opts;
+    if (opts && !_.isEmpty(_.keys(opts))) {
+      if (!_.isEmpty(_.keys(this._options))) {
+        this._options = _.merge(this._options, opts);
+      } else {
+        this._options = opts;
+      }
     }
   }
 

@@ -25,3 +25,5 @@ export const XS_DEFAULT_SCHEMA = 'default';
 export type ClassType<T> = { new (...args: any[]): T; };
 
 export type JS_DATA_TYPES = 'string' | 'text' | 'number' | 'boolean' | 'double' | 'json' | 'date' | 'time' | 'datetime' | 'timestamp' | 'byte';
+
+export const XS_ANNOTATION_OPTIONS_CACHE = 'anno_options_cache';

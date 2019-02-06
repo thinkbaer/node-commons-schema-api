@@ -50,7 +50,7 @@
     "typescript-require": "^0.2.10"
   },
   "dependencies": {
-    "commons-base": "^1.0.11"
+    "commons-base": "^1.0.12"
   },
   "private": true,
   "nyc": {
