@@ -33,7 +33,7 @@ export class ClassRef implements IClassRef {
 
   private _cacheEntity: IEntityRef;
 
-  options: any = {};
+  private _options: any = {};
 
   isEntity: boolean = false;
 
@@ -56,8 +56,24 @@ export class ClassRef implements IClassRef {
     this.isPlaceholder = false;
   }
 
+  getOptions(key?: string): any {
+    if (key) {
+      return _.get(this._options, key);
+    }
+    return this._options;
+  }
+
   setOptions(options: any) {
-    this.options = options;
+    if (options && !_.isEmpty(_.keys(options))) {
+      this._options = options;
+    }
+  }
+
+  setOption(key: string, value: any) {
+    if (!this._options) {
+      this._options = {};
+    }
+    _.set(this._options, key, value);
   }
 
   get name() {
@@ -65,16 +81,16 @@ export class ClassRef implements IClassRef {
   }
 
   get storingName() {
-    let name = _.get(this.options, 'name', this.className);
+    let name = _.get(this._options, 'name', this.className);
     return _.snakeCase(name);
   }
 
   set storingName(v: string) {
-    _.set(this.options, 'name', v);
+    _.set(this._options, 'name', v);
   }
 
   hasName() {
-    return _.has(this.options, 'name');
+    return _.has(this._options, 'name');
   }
 
   setSchemas(s: string[]) {
@@ -95,7 +111,7 @@ export class ClassRef implements IClassRef {
 
   }
 
-  getSchema(): string  {
+  getSchema(): string {
     return this.schema;
     /*
     if (this.schema.length == 1) {
@@ -204,7 +220,7 @@ export class ClassRef implements IClassRef {
       schema: this.getSchema(),
       className: this.name,
       isEntity: this.isEntity,
-      options: this.options,
+      options: this._options,
     };
 
     if (!this.isEntity && follow) {

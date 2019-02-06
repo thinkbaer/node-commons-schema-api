@@ -2,9 +2,10 @@ import * as _ from 'lodash';
 import {XS_DEFAULT, XS_TYPE} from "./Constants";
 import {ClassRef} from "./ClassRef";
 import {LookupRegistry} from "./LookupRegistry";
+import {IBaseRef} from "./IBaseRef";
 
 
-export abstract class AbstractRef {
+export abstract class AbstractRef implements IBaseRef {
 
   private readonly _baseType: XS_TYPE;
 
@@ -91,7 +92,7 @@ export abstract class AbstractRef {
   }
 
 
-  abstract id(): string | string[];
+  abstract id(): string;
 
 
   toJson() {

@@ -1,5 +1,3 @@
-
-
 export interface IBaseRef {
 
   /**
@@ -15,11 +13,27 @@ export interface IBaseRef {
   /**
    * Name for processing and identifing
    */
-  machineName:string;
+  machineName: string;
 
   /**
    * Unique identifier
    */
   id(): string;
+
+
+  /**
+   * Return some options
+   */
+  getOptions(key?: string): any;
+
+  /**
+   * Set some option
+   */
+  setOption(key: string, value: any): void;
+
+  /**
+   * Set options
+   */
+  setOptions(value: any): void;
 
 }
