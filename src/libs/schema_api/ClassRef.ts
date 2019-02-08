@@ -154,8 +154,31 @@ export class ClassRef implements IClassRef {
     return classRef;
   }
 
+  static checkIfFunctionCallback(klass: string | Function) {
+    if (_.isFunction(klass)) {
+      // maybe function which return type like () => type
+      let name = ClassUtils.getClassName(klass);
+      if (_.isEmpty(name)) {
+        let fn = null;
+        try {
+          fn = klass();
+
+        } catch (e) {
+
+        }
+        if (fn) {
+          let name = ClassUtils.getClassName(fn);
+          if (!_.isEmpty(name)) {
+            klass = fn;
+          }
+        }
+      }
+    }
+    return klass;
+  }
 
   static get(klass: string | Function, registryName: string = XS_DEFAULT): ClassRef {
+    klass = this.checkIfFunctionCallback(klass);
     let classRef = this.find(klass, registryName);
     if (classRef) {
       if (classRef.isPlaceholder && _.isFunction(klass)) {
@@ -199,11 +222,11 @@ export class ClassRef implements IClassRef {
 
 
   getPropertyRefs(): IPropertyRef[] {
-    return this.getLookupRegistry().filter(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef().getClass() === this.getClass());
+    return this.getLookupRegistry().filter(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef() === this);
   }
 
   getPropertyRef(name: string): IPropertyRef {
-    return this.getLookupRegistry().find(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef().getClass() === this.getClass() && e.name === name);
+    return this.getLookupRegistry().find(XS_TYPE_PROPERTY, (e: IPropertyRef) => e.getSourceRef() === this && e.name === name);
   }
 
   id() {
