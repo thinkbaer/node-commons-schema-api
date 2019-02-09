@@ -39,6 +39,8 @@ export class ClassRef implements IClassRef {
 
   isPlaceholder: boolean = false;
 
+  readonly baseType = XS_TYPE_CLASS_REF;
+
   constructor(klass: string | Function) {
     this.className = ClassUtils.getClassName(klass);
     if (_.isString(klass)) {

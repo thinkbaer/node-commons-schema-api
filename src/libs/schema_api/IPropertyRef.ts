@@ -15,6 +15,8 @@ export interface IPropertyRef extends IBaseRef {
 
   getEntityRef(): IEntityRef;
 
+  getType(): string;
+
   getSourceRef(): IClassRef;
 
   getTargetRef(): IClassRef;

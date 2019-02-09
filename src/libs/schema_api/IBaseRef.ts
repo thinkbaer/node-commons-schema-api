@@ -1,3 +1,5 @@
+import {XS_TYPE} from "./Constants";
+
 export interface IBaseRef {
 
   /**
@@ -14,6 +16,9 @@ export interface IBaseRef {
    * Name for processing and identifing
    */
   machineName: string;
+
+
+  baseType: XS_TYPE;
 
   /**
    * Unique identifier
@@ -35,5 +40,6 @@ export interface IBaseRef {
    * Set options
    */
   setOptions(value: any): void;
+
 
 }
