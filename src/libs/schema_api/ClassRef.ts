@@ -160,11 +160,11 @@ export class ClassRef implements IClassRef {
     if (_.isFunction(klass)) {
       // maybe function which return type like () => type
       let name = ClassUtils.getClassName(klass);
+
       if (_.isEmpty(name)) {
         let fn = null;
         try {
-          fn = klass();
-
+          //fn = klass();
         } catch (e) {
 
         }
@@ -179,8 +179,10 @@ export class ClassRef implements IClassRef {
     return klass;
   }
 
-  static get(klass: string | Function, registryName: string = XS_DEFAULT): ClassRef {
-    klass = this.checkIfFunctionCallback(klass);
+  static get(klass: string | Function, registryName: string = XS_DEFAULT, resolve: boolean = false): ClassRef {
+    if(resolve){
+      klass = this.checkIfFunctionCallback(klass);
+    }
     let classRef = this.find(klass, registryName);
     if (classRef) {
       if (classRef.isPlaceholder && _.isFunction(klass)) {

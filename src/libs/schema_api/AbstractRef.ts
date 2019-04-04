@@ -26,7 +26,7 @@ export abstract class AbstractRef implements IBaseRef {
     if (object instanceof ClassRef) {
       this.object = object;
     } else {
-      this.object = object ? ClassRef.get(object, this._lookupRegistry) : null;
+      this.object = object ? ClassRef.get(object, this._lookupRegistry, type == XS_TYPE_PROPERTY) : null;
     }
     switch (type) {
       case XS_TYPE_ENTITY:
