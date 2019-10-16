@@ -1,6 +1,6 @@
 {
   "name": "commons-schema-api",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Library for schema api",
   "main": "index.js",
   "directories": {
