@@ -11,39 +11,46 @@ export class SchemaUtils {
     if (options.beforeBuild) {
       options.beforeBuild(entityRef, data, object)
     }
-    for (let p of entityRef.getPropertyRefs()) {
-      if ((_.isNull(data[p.name]) || _.isUndefined(data[p.name]))) {
-        //object[p.name] = null;
-        continue;
-      }
-      if (p.isReference()) {
-        let ref = p.isEntityReference() ? p.getEntityRef() : p.getTargetRef();
-        if (p.isCollection()) {
-          object[p.name] = [];
-          for (let i = 0; i < data[p.name].length; i++) {
-            object[p.name][i] = ref.build(data[p.name][i], options);
-          }
-        } else {
-          object[p.name] = ref.build(data[p.name], options);
+
+    if (!_.get(options, 'createAndCopy', false)) {
+
+      for (let p of entityRef.getPropertyRefs()) {
+        if ((_.isNull(data[p.name]) || _.isUndefined(data[p.name]))) {
+          //object[p.name] = null;
+          continue;
         }
-      } else {
-        if (p.isCollection() && (_.isArray(data[p.name]) || _.isSet(data[p.name]))) {
-          object[p.name] = [];
-          for (let i = 0; i < data[p.name].length; i++) {
-            let v = data[p.name][i];
-            if (v) {
-              object[p.name][i] = p.convert(v);
-            } else {
-              object[p.name][i] = null;
+        if (p.isReference()) {
+          let ref = p.isEntityReference() ? p.getEntityRef() : p.getTargetRef();
+          if (p.isCollection()) {
+            object[p.name] = [];
+            for (let i = 0; i < data[p.name].length; i++) {
+              object[p.name][i] = ref.build(data[p.name][i], options);
             }
+          } else {
+            object[p.name] = ref.build(data[p.name], options);
           }
-        } else if (p.isCollection() && !(_.isArray(data[p.name]) || _.isSet(data[p.name]))) {
-          throw new NotYetImplementedError();
         } else {
-          object[p.name] = p.convert(data[p.name]);
+          if (p.isCollection() && (_.isArray(data[p.name]) || _.isSet(data[p.name]))) {
+            object[p.name] = [];
+            for (let i = 0; i < data[p.name].length; i++) {
+              let v = data[p.name][i];
+              if (v) {
+                object[p.name][i] = p.convert(v);
+              } else {
+                object[p.name][i] = null;
+              }
+            }
+          } else if (p.isCollection() && !(_.isArray(data[p.name]) || _.isSet(data[p.name]))) {
+            throw new NotYetImplementedError();
+          } else {
+            object[p.name] = p.convert(data[p.name]);
+          }
         }
       }
+    } else {
+      _.assign(object, data);
     }
+
     if (options.afterBuild) {
       options.afterBuild(entityRef, data, object)
     }
