@@ -18,7 +18,7 @@ export interface IBuildOptions {
    * @param from
    * @param to
    */
-  beforeBuild?: (entityRef: IEntityRef | IClassRef, from: any, to: any) => void
+  beforeBuild?: (entityRef: IEntityRef | IClassRef, from: any, to: any, options?: IBuildOptions) => void
 
   /**
    * Special callback for postprocessing
@@ -27,5 +27,5 @@ export interface IBuildOptions {
    * @param from
    * @param to
    */
-  afterBuild?: (entityRef: IEntityRef | IClassRef, from: any, to: any) => void
+  afterBuild?: (entityRef: IEntityRef | IClassRef, from: any, to: any, options?: IBuildOptions) => void
 }

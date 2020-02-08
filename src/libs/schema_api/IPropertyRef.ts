@@ -2,6 +2,7 @@ import {IClassRef} from "./IClassRef";
 import {IEntityRef} from "./IEntityRef";
 import {IPropertyRefMetadata} from "./IPropertyRefMetadata";
 import {IBaseRef} from "./IBaseRef";
+import {IBuildOptions} from "./IBuildOptions";
 
 export interface IPropertyRef extends IBaseRef {
 
@@ -23,7 +24,7 @@ export interface IPropertyRef extends IBaseRef {
 
   isCollection(): boolean;
 
-  convert(i: any): any;
+  convert(i: any, options?: IBuildOptions): any;
 
   toJson(follow?: boolean): IPropertyRefMetadata;
 
