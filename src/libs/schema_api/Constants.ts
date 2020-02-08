@@ -22,8 +22,30 @@ export const XS_ID_SEPARATOR = '--';
 
 export const XS_DEFAULT_SCHEMA = 'default';
 
-export type ClassType<T> = { new (...args: any[]): T; };
+export type ClassType<T> = { new(...args: any[]): T; };
 
-export type JS_DATA_TYPES = 'string' | 'text' | 'number' | 'boolean' | 'double' | 'json' | 'date' | 'time' | 'datetime' | 'timestamp' | 'byte';
+export type JS_DATA_TYPES =
+  'string'
+  | 'text'
+  | 'number'
+  | 'boolean'
+  | 'double'
+  | 'json'
+  | 'date'
+  | 'time'
+  | 'datetime'
+  | 'timestamp'
+  | 'byte'
+  | 'object'
+  | 'symbol'
+  | 'null'
+  | 'undefined'
+  | 'bigint'
+  ;
 
 export const XS_ANNOTATION_OPTIONS_CACHE = 'anno_options_cache';
+
+
+export const JS_PRIMATIVE_TYPES: JS_DATA_TYPES[] = [
+  'string', 'number', 'boolean', 'object', 'symbol', 'date', 'null', 'undefined', 'bigint'
+];

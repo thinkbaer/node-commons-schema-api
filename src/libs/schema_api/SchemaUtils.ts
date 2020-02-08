@@ -34,7 +34,7 @@ export class SchemaUtils {
         }
         if (p.isReference()) {
           let ref = p.isEntityReference() ? p.getEntityRef() : p.getTargetRef();
-          if (p.isCollection()) {
+          if (p.isCollection() || _.isArray(data[p.name])) {
             object[p.name] = [];
             for (let i = 0; i < data[p.name].length; i++) {
               object[p.name][i] = ref.build(data[p.name][i], options);
