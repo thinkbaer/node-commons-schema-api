@@ -1,6 +1,6 @@
 {
   "name": "commons-schema-api",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Library for schema api",
   "main": "index.js",
   "directories": {
@@ -27,11 +27,11 @@
   },
   "homepage": "https://github.com/thinkbaer/node-commons-schema-api#readme",
   "devDependencies": {
-    "@allgemein/packaging": "^1.0.3",
-    "@types/chai": "^4.1.7",
-    "@types/lodash": "^4.14.120",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^12.12.5",
+    "@allgemein/packaging": "^1.1.0",
+    "@types/chai": "^4.2.8",
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.0",
     "chai": "^4.2.0",
     "del": "5.1.0",
     "gulp": "4.0.2",
@@ -41,20 +41,20 @@
     "gulp-shell": "0.7.1",
     "gulp-sourcemaps": "2.6.5",
     "gulp-typescript": "5.0.1",
-    "gulpclass": "0.1.2",
-    "mocha": "^5.2.0",
+    "gulpclass": "0.2.0",
+    "mocha": "^7.0.1",
     "mocha-typescript": "^1.1.17",
-    "nyc": "^13.1.0",
+    "nyc": "^15.0.0",
     "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.2.4",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
     "typescript-require": "^0.2.10",
-    "codelyzer": "^5.2.0",
+    "codelyzer": "^5.2.1",
     "merge-stream": "^2.0.0",
-    "tslint": "^5.20.0"
+    "tslint": "^6.0.0"
   },
   "dependencies": {
-    "commons-base": "^1.0.12"
+    "commons-base": "^1.1.2"
   },
   "private": true,
   "nyc": {
