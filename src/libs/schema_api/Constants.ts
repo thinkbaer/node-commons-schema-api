@@ -45,6 +45,24 @@ export type JS_DATA_TYPES =
 
 export const XS_ANNOTATION_OPTIONS_CACHE = 'anno_options_cache';
 
+export const JS_DATA_TYPES: JS_DATA_TYPES[] = [
+  'string'
+  , 'text'
+  , 'number'
+  , 'boolean'
+  , 'double'
+  , 'json'
+  , 'date'
+  , 'time'
+  , 'datetime'
+  , 'timestamp'
+  , 'byte'
+  , 'object'
+  , 'symbol'
+  , 'null'
+  , 'undefined'
+  , 'bigint'
+];
 
 export const JS_PRIMATIVE_TYPES: JS_DATA_TYPES[] = [
   'string', 'number', 'boolean', 'object', 'symbol', 'date', 'null', 'undefined', 'bigint'
