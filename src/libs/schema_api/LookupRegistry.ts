@@ -67,4 +67,36 @@ export class LookupRegistry {
   }
 
 
+  /**
+   * return lookup registry names
+   */
+  static getRegistryNames() {
+    return _.keys(this.$self);
+  }
+
+  /**
+   * return lookup registries
+   */
+  static getRegistries() {
+    return _.keys(this.$self).map(x => this.$self[x]);
+  }
+
+  /**
+   * search in all registries
+   *
+   * @param context
+   * @param search
+   */
+  static find<T>(context: XS_TYPE, search: any): T {
+    const registryNames = _.keys(this.$self);
+    for (const registryName of registryNames) {
+      const found = <T>this.$self[registryName].find(context, search);
+      if (found) {
+        return found;
+      }
+    }
+    return null;
+  }
 }
+
+

@@ -1,5 +1,10 @@
 export const XS_DEFAULT = 'default';
 
+// export const XS_GLOBAL = 'default';
+export const XS_GLOBALLY = '__global__';
+
+export const XS_DEFAULT_CLASSES = 'default_class_ref';
+
 export const XS_TYPE_SCHEMA = 'schema';
 export const XS_TYPE_ENTITY = 'entity';
 export const XS_TYPE_CLASS_REF = 'class_ref';

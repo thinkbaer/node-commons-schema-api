@@ -45,8 +45,11 @@ export class AnnotationsHelper {
   static merge(object: IClassRef, options: any, property: string = null) {
     let addOns = _.remove(MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE), (x: IPropertyExtentions) =>
       property ?
-        x.object === object && x.property === property && x.type == XS_TYPE_PROPERTY :
-        x.object === object && x.type == XS_TYPE_ENTITY
+        x.object === object &&
+        x.property === property &&
+        x.type == XS_TYPE_PROPERTY :
+        x.object === object &&
+        x.type == XS_TYPE_ENTITY
     );
 
     if (addOns) {

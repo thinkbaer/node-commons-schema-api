@@ -3,7 +3,9 @@ import {ClassUtils, NotYetImplementedError} from "commons-base/browser";
 import {SchemaUtils} from "./SchemaUtils";
 import {
   XS_DEFAULT,
-  XS_DEFAULT_SCHEMA, XS_ID_SEPARATOR,
+  XS_DEFAULT_SCHEMA,
+  XS_GLOBALLY,
+  XS_ID_SEPARATOR,
   XS_TYPE_CLASS_REF,
   XS_TYPE_ENTITY,
   XS_TYPE_PROPERTY,
@@ -103,30 +105,11 @@ export class ClassRef implements IClassRef {
 
   setSchema(s: string) {
     this.schema = s;
-    /*
-    if (this.schema.length == 1 && this.schema[0] == XS_DEFAULT_SCHEMA) {
-      this.schema = [s];
-    } else {
-      this.schema.push(s);
-    }
-    */
-
   }
 
   getSchema(): string {
     return this.schema;
-    /*
-    if (this.schema.length == 1) {
-      return this.schema[0];
-    } else {
-      return this.schema;
-    }*/
   }
-
-  /*
-  schemaName(){
-    return this.schemas.join('')
-  }*/
 
   inMultipleSchemas() {
     return this.schema.length > 1;
@@ -152,9 +135,15 @@ export class ClassRef implements IClassRef {
 
   static find(klass: string | Function, registryName: string = XS_DEFAULT): ClassRef {
     let name = ClassUtils.getClassName(klass);
-    let classRef = LookupRegistry.$(registryName).find<ClassRef>(XS_TYPE_CLASS_REF, (c: ClassRef) => c.className == name);
+    let classRef = null;
+    if (registryName === XS_GLOBALLY) {
+      classRef = LookupRegistry.find<ClassRef>(XS_TYPE_CLASS_REF, (c: ClassRef) => c.className == name);
+    } else {
+      classRef = LookupRegistry.$(registryName).find<ClassRef>(XS_TYPE_CLASS_REF, (c: ClassRef) => c.className == name);
+    }
     return classRef;
   }
+
 
   static checkIfFunctionCallback(klass: string | Function) {
     if (_.isFunction(klass)) {
@@ -179,8 +168,9 @@ export class ClassRef implements IClassRef {
     return klass;
   }
 
+
   static get(klass: string | Function, registryName: string = XS_DEFAULT, resolve: boolean = false): ClassRef {
-    if(resolve){
+    if (resolve) {
       klass = this.checkIfFunctionCallback(klass);
     }
     let classRef = this.find(klass, registryName);
@@ -190,12 +180,29 @@ export class ClassRef implements IClassRef {
       }
       return classRef;
     }
+
+    if (registryName === XS_GLOBALLY) {
+      registryName = XS_DEFAULT;
+    }
+
     classRef = new ClassRef(klass);
     classRef.lookupRegistry = registryName;
     let binding = Binding.create(XS_TYPE_SCHEMA, XS_DEFAULT_SCHEMA, XS_TYPE_CLASS_REF, classRef);
     LookupRegistry.$(registryName).add(binding.bindingType, binding);
     return LookupRegistry.$(registryName).add(XS_TYPE_CLASS_REF, classRef);
   }
+
+
+  /**
+   * return global class reference
+   *
+   * @param klass
+   * @param resolve
+   */
+  static getGlobal(klass: string | Function, resolve: boolean = false): ClassRef {
+    return this.get(klass, XS_GLOBALLY, resolve);
+  }
+
 
   getLookupRegistry() {
     return LookupRegistry.$(this.lookupRegistry)
