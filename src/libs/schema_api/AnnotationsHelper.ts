@@ -1,48 +1,54 @@
-import * as _ from "lodash";
-import {ClassRef} from "./ClassRef";
-import {XS_ANNOTATION_OPTIONS_CACHE, XS_TYPE_ENTITY, XS_TYPE_PROPERTY} from "./Constants";
-import {IClassRef} from "./IClassRef";
+import * as _ from 'lodash';
+import {ClassRef} from './ClassRef';
+import {XS_ANNOTATION_OPTIONS_CACHE, XS_TYPE_ENTITY, XS_TYPE_PROPERTY} from './Constants';
+import {IClassRef} from './IClassRef';
 
-import {MetaArgs} from "commons-base/browser";
-import {IEntityRef} from "./IEntityRef";
-import {IPropertyExtentions} from "./IPropertyExtentions";
+import {MetaArgs} from 'commons-base/browser';
+import {IPropertyExtentions} from './IPropertyExtentions';
 
 
 export class AnnotationsHelper {
 
-  static forPropertyOn(object: IClassRef, property: string, options: any) {
-    let prop = object.getPropertyRef(property);
-    if(prop){
-      let pOptions = prop.getOptions();
-      _.defaults(pOptions,options);
-    }else{
-      // cache for use by property constructor
-      MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
-        type: XS_TYPE_PROPERTY,
-        object: object,
-        property: property,
-        options: options
-      })
+  static forPropertyOn(object: Function, property: string, options: any) {
+    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === object);
+
+    for (const ref of classRefs) {
+      let prop = ref.getPropertyRef(property);
+      if (prop) {
+        const pOptions = prop.getOptions();
+        _.defaults(pOptions, options);
+      }
     }
+
+    MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
+      type: XS_TYPE_PROPERTY,
+      object: object,
+      property: property,
+      options: options
+    });
   }
 
-  static forEntityOn(object: ClassRef, options: any) {
-    let ent = <IEntityRef>object.getEntityRef();
-    if(ent){
-      let pOptions = ent.getOptions();
-      _.defaults(pOptions,options);
-    }else{
-      // cache for use by entity constructor
-      MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
-        type: XS_TYPE_ENTITY,
-        object: object,
-        options: options
-      })
+
+  static forEntityOn(object: Function, options: any) {
+    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === object);
+
+    for (const ref of classRefs) {
+      if (ref) {
+        let pOptions = ref.getOptions();
+        _.defaults(pOptions, options);
+      }
     }
+
+    MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
+      type: XS_TYPE_ENTITY,
+      object: object,
+      options: options
+    });
   }
 
-  static merge(object: IClassRef, options: any, property: string = null) {
-    let addOns = _.remove(MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE), (x: IPropertyExtentions) =>
+  static merge(classRef: IClassRef, options: any, property: string = null) {
+    const object = classRef.getClass();
+    let addOns = _.filter(MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE), (x: IPropertyExtentions) =>
       property ?
         x.object === object &&
         x.property === property &&
@@ -53,8 +59,8 @@ export class AnnotationsHelper {
 
     if (addOns) {
       addOns.forEach(addOn => {
-        _.defaults(options, addOn.options)
-      })
+        _.defaults(options, addOn.options);
+      });
     }
   }
 }

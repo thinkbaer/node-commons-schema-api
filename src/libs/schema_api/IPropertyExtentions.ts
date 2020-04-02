@@ -1,9 +1,8 @@
-import {XS_TYPE} from "./Constants";
-import {IClassRef} from "./IClassRef";
+import {XS_TYPE} from './Constants';
 
 export interface IPropertyExtentions {
   type: XS_TYPE,
-  object: IClassRef,
+  object: Function,
   property?: string,
   options: any
 
