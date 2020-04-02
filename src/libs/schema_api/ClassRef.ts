@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import {ClassUtils, NotYetImplementedError} from "commons-base/browser";
-import {SchemaUtils} from "./SchemaUtils";
+import {ClassUtils, NotYetImplementedError} from 'commons-base/browser';
+import {SchemaUtils} from './SchemaUtils';
 import {
   XS_DEFAULT,
   XS_DEFAULT_SCHEMA,
@@ -10,14 +10,14 @@ import {
   XS_TYPE_ENTITY,
   XS_TYPE_PROPERTY,
   XS_TYPE_SCHEMA
-} from "./Constants";
-import {LookupRegistry} from "./LookupRegistry";
-import {Binding} from "./Binding";
-import {IEntityRef} from "./IEntityRef";
-import {IPropertyRef} from "./IPropertyRef";
-import {IClassRef} from "./IClassRef";
-import {IBuildOptions} from "./IBuildOptions";
-import {IClassRefMetadata} from "./IClassRefMetadata";
+} from './Constants';
+import {LookupRegistry} from './LookupRegistry';
+import {Binding} from './Binding';
+import {IEntityRef} from './IEntityRef';
+import {IPropertyRef} from './IPropertyRef';
+import {IClassRef} from './IClassRef';
+import {IBuildOptions} from './IBuildOptions';
+import {IClassRefMetadata} from './IClassRefMetadata';
 
 export class ClassRef implements IClassRef {
 
@@ -100,7 +100,7 @@ export class ClassRef implements IClassRef {
   setSchemas(s: string[]) {
     s.forEach((s: string) => {
       this.setSchema(s);
-    })
+    });
   }
 
   setSchema(s: string) {
@@ -142,6 +142,25 @@ export class ClassRef implements IClassRef {
       classRef = LookupRegistry.$(registryName).find<ClassRef>(XS_TYPE_CLASS_REF, (c: ClassRef) => c.className == name);
     }
     return classRef;
+  }
+
+  /**
+   * get all class refs for some class name
+   *
+   * @param klass
+   */
+  static getAllByClassName(klass: any): ClassRef[] {
+    let name = ClassUtils.getClassName(klass);
+    return LookupRegistry.filter<ClassRef>(XS_TYPE_CLASS_REF, (c: ClassRef) => c.className == name);
+  }
+
+  /**
+   * filter function for classrefs
+   *
+   * @param klass
+   */
+  static filter(fn: (c: ClassRef) => boolean): ClassRef[] {
+    return LookupRegistry.filter<ClassRef>(XS_TYPE_CLASS_REF, fn);
   }
 
 
@@ -205,7 +224,7 @@ export class ClassRef implements IClassRef {
 
 
   getLookupRegistry() {
-    return LookupRegistry.$(this.lookupRegistry)
+    return LookupRegistry.$(this.lookupRegistry);
   }
 
 
@@ -261,7 +280,7 @@ export class ClassRef implements IClassRef {
       meta.properties = [];
       this.getPropertyRefs().forEach(prop => {
         meta.properties.push(prop.toJson());
-      })
+      });
     }
 
     return meta;

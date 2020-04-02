@@ -11,7 +11,6 @@ import {IPropertyExtentions} from "./IPropertyExtentions";
 export class AnnotationsHelper {
 
   static forPropertyOn(object: IClassRef, property: string, options: any) {
-
     let prop = object.getPropertyRef(property);
     if(prop){
       let pOptions = prop.getOptions();

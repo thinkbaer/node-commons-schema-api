@@ -97,6 +97,24 @@ export class LookupRegistry {
     }
     return null;
   }
+
+  /**
+   * filter over all registries
+   *
+   * @param context
+   * @param search
+   */
+  static filter<T>(context: XS_TYPE, search: any): T[] {
+    const results:T[] = [];
+    const registryNames = _.keys(this.$self);
+    for (const registryName of registryNames) {
+      const found = <T[]>this.$self[registryName].filter(context, search);
+      if (!_.isEmpty(found)) {
+        results.push(...found);
+      }
+    }
+    return results;
+  }
 }
 
 
