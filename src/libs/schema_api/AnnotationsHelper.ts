@@ -18,6 +18,10 @@ export class AnnotationsHelper {
       if (prop) {
         const pOptions = prop.getOptions();
         _.defaults(pOptions, options);
+        if (ref.isEntity) {
+          const eOptions = ref.getEntityRef().getOptions();
+          _.defaults(eOptions, options);
+        }
       }
     }
 
@@ -37,6 +41,10 @@ export class AnnotationsHelper {
       if (ref) {
         let pOptions = ref.getOptions();
         _.defaults(pOptions, options);
+        if (ref.isEntity) {
+          const eOptions = ref.getEntityRef().getOptions();
+          _.defaults(eOptions, options);
+        }
       }
     }
 
