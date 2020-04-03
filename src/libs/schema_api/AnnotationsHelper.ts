@@ -10,7 +10,8 @@ import {IPropertyExtentions} from './IPropertyExtentions';
 export class AnnotationsHelper {
 
   static forPropertyOn(object: Function, property: string, options: any) {
-    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === object);
+    const source = object.constructor;
+    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === source);
 
     for (const ref of classRefs) {
       let prop = ref.getPropertyRef(property);
@@ -22,7 +23,7 @@ export class AnnotationsHelper {
 
     MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
       type: XS_TYPE_PROPERTY,
-      object: object,
+      object: source,
       property: property,
       options: options
     });
