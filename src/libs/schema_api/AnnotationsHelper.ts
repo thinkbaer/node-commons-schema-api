@@ -10,7 +10,7 @@ import {IPropertyExtentions} from './IPropertyExtentions';
 export class AnnotationsHelper {
 
   static forPropertyOn(object: Function, property: string, options: any) {
-    const source = object.constructor;
+    const source = ClassUtils.getFunction(object);
     const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === source);
 
     for (const ref of classRefs) {
@@ -35,7 +35,8 @@ export class AnnotationsHelper {
 
 
   static forEntityOn(object: Function, options: any) {
-    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === object);
+    const source = ClassUtils.getFunction(object);
+    const classRefs: ClassRef[] = ClassRef.filter(c => c.originalValue === source);
 
     for (const ref of classRefs) {
       if (ref) {
@@ -50,7 +51,7 @@ export class AnnotationsHelper {
 
     MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE).push(<IPropertyExtentions>{
       type: XS_TYPE_ENTITY,
-      object: object,
+      object: source,
       options: options
     });
   }
