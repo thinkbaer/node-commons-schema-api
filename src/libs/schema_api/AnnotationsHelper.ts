@@ -3,7 +3,7 @@ import {ClassRef} from './ClassRef';
 import {XS_ANNOTATION_OPTIONS_CACHE, XS_TYPE_ENTITY, XS_TYPE_PROPERTY} from './Constants';
 import {IClassRef} from './IClassRef';
 
-import {MetaArgs} from 'commons-base/browser';
+import {ClassUtils, MetaArgs} from 'commons-base/browser';
 import {IPropertyExtentions} from './IPropertyExtentions';
 
 
@@ -56,13 +56,17 @@ export class AnnotationsHelper {
   }
 
   static merge(classRef: IClassRef, options: any, property: string = null) {
-    const object = classRef.getClass();
-    let addOns = _.filter(MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE), (x: IPropertyExtentions) =>
+    if (!classRef) {
+      return;
+    }
+
+    const object = classRef.getClass(true);
+    const addOns = _.filter(MetaArgs.key(XS_ANNOTATION_OPTIONS_CACHE), (x: IPropertyExtentions) =>
       property ?
-        x.object === object &&
+        (classRef.isPlaceholder ? ClassUtils.getClassName(x.object) === classRef.name : x.object === object) &&
         x.property === property &&
         x.type == XS_TYPE_PROPERTY :
-        x.object === object &&
+        (classRef.isPlaceholder ? ClassUtils.getClassName(x.object) === classRef.name : x.object === object) &&
         x.type == XS_TYPE_ENTITY
     );
 

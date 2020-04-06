@@ -1,11 +1,11 @@
-import {IPropertyRef} from "./IPropertyRef";
-import {IBuildOptions} from "./IBuildOptions";
-import {IClassRefMetadata} from "./IClassRefMetadata";
-import {IBaseRef} from "./IBaseRef";
-import {ILookupRegistry} from "./ILookupRegistry";
+import {IPropertyRef} from './IPropertyRef';
+import {IBuildOptions} from './IBuildOptions';
+import {IClassRefMetadata} from './IClassRefMetadata';
+import {IBaseRef} from './IBaseRef';
 
 export interface IClassRef extends IBaseRef {
 
+  isPlaceholder: boolean;
 
   getClass(create?: boolean): Function;
 

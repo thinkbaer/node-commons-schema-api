@@ -84,6 +84,7 @@ export class ClassRef implements IClassRef {
     return this.className;
   }
 
+
   get storingName() {
     let name = _.get(this._options, 'name', this.className);
     return _.snakeCase(name);
