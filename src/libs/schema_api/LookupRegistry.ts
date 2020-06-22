@@ -19,7 +19,7 @@ export class LookupRegistry {
 
   static reset(name: string = XS_DEFAULT): void {
     if (this.$self[name]) {
-      this.$self[name] = null;
+      delete this.$self[name];
     }
   }
 
