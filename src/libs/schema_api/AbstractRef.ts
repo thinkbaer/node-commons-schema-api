@@ -30,10 +30,10 @@ export abstract class AbstractRef implements IBaseRef {
     }
     switch (type) {
       case XS_TYPE_ENTITY:
-        AnnotationsHelper.merge(this.object, this._options);
+        AnnotationsHelper.merge(<any>this.object, this._options);
         break;
       case XS_TYPE_PROPERTY:
-        AnnotationsHelper.merge(this.object, this._options, this.name);
+        AnnotationsHelper.merge(<any>this.object, this._options, this.name);
         break;
     }
   }

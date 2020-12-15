@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {XS_DEFAULT, XS_TYPE} from "./Constants";
+import {XS_DEFAULT, XS_TYPE} from './Constants';
 
 export class LookupRegistry {
 
@@ -18,13 +18,13 @@ export class LookupRegistry {
   }
 
   static reset(name: string = XS_DEFAULT): void {
-    if (this.$self[name]) {
+    if (_.has(this.$self, name)) {
       delete this.$self[name];
     }
   }
 
   static $(name: string = XS_DEFAULT): LookupRegistry {
-    if (!this.$self[name]) {
+    if (!_.has(this.$self, name) || !this.$self[name]) {
       this.$self[name] = new LookupRegistry(name);
     }
     return this.$self[name];
@@ -105,7 +105,7 @@ export class LookupRegistry {
    * @param search
    */
   static filter<T>(context: XS_TYPE, search: any): T[] {
-    const results:T[] = [];
+    const results: T[] = [];
     const registryNames = _.keys(this.$self);
     for (const registryName of registryNames) {
       const found = <T[]>this.$self[registryName].filter(context, search);

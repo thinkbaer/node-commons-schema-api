@@ -1,4 +1,6 @@
-import {XS_TYPE} from "./Constants";
+import {XS_TYPE} from './Constants';
+import {ILookupRegistry} from './ILookupRegistry';
+import {LookupRegistry} from './LookupRegistry';
 
 export interface IBaseRef {
 
@@ -42,4 +44,8 @@ export interface IBaseRef {
   setOptions(value: any): void;
 
 
+  /**
+   * Return lookup registry
+   */
+  getLookupRegistry(): LookupRegistry;
 }
