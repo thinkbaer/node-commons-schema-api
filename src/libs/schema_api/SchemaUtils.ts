@@ -3,6 +3,8 @@ import {IClassRef} from "./IClassRef";
 import * as _ from "lodash";
 import {NotYetImplementedError} from "commons-base/browser";
 import {IBuildOptions} from "./IBuildOptions";
+import {LookupRegistry} from './LookupRegistry';
+import {XS_TYPE_ENTITY} from './Constants';
 
 export class SchemaUtils {
 
@@ -91,6 +93,32 @@ export class SchemaUtils {
     // number
     //
   }
+
+
+  //
+  // static resolveByEntityRef<T>(objs: T[]) {
+  //   const resolved: { [entityType: string]: T[] } = {};
+  //   for (const obj of objs) {
+  //     const entityName = this.resolveName(obj);
+  //     if (!resolved[entityName]) {
+  //       resolved[entityName] = [];
+  //     }
+  //     resolved[entityName].push(obj);
+  //
+  //   }
+  //   return resolved;
+  // }
+  //
+  //
+  // static resolveName(instance: any): string {
+  //   const xsdef: IEntityRef = LookupRegistry.find(XS_TYPE_ENTITY, x => ).$().getEntityRefFor(instance);
+  //   if (xsdef) {
+  //     return xsdef.name;
+  //   } else {
+  //     throw new Error('resolveName not found for instance: ' + JSON.stringify(instance));
+  //   }
+  // }
+
 
 
 }

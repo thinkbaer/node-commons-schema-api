@@ -7,6 +7,10 @@ export interface IClassRef extends IBaseRef {
 
   isPlaceholder: boolean;
 
+  getClassName?(): string;
+
+  getSchema?(): string | string[];
+
   getClass(create?: boolean): Function;
 
   getPropertyRef(name: string): IPropertyRef;

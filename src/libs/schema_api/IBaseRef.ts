@@ -1,5 +1,4 @@
 import {XS_TYPE} from './Constants';
-import {ILookupRegistry} from './ILookupRegistry';
 import {LookupRegistry} from './LookupRegistry';
 
 export interface IBaseRef {
